@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 [ "$PAM_TYPE" = "auth" ] || exit 0
 
 USER_EXISTS=false
@@ -19,4 +19,3 @@ if [ "$USER_ACTIVE" = "True" ]
   else
     echo User $PAM_USER does not exist or is not active, not creating
 fi
-

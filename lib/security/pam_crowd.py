@@ -1,11 +1,22 @@
 import requests
 from lxml import objectify
 import syslog
-AUTH_USER="pam_client"
-AUTH_PASS="SuperSecure"
-URL_ROOT="http://192.168.1.101:8095/crowd/rest/usermanagement/latest/"
+
 
 headers = {'content-type': 'application/xml'}
+
+def load_config(conf_file ='/etc/crowd.d/crowd.conf'):
+  import yaml
+  import sys
+  try:
+    cfg={}
+    with open(conf_file,'r') as f:
+      cfg=yaml.safe_load(f)
+    auth_log("pam_crowd.py read crowd connection configuration file.")
+    return cfg["user"],cfg["pass"],cfg["url"]
+  except Exception as e:
+    auth_log("Error:{}, conf_file:{}".format(e.msg,conf_file))
+    return None,None,None
 
 def auth_log(msg):
   syslog.openlog(facility=syslog.LOG_AUTH)
@@ -72,4 +83,5 @@ def pam_sm_chauthtok(pamh, flags, argv):
 
 if __name__ == '__main__':
   import sys
+  (AUTH_USER,AUTH_PASS,URL_ROOT)=load_config()
   print verify_user(sys.argv[1])

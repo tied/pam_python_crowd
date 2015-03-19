@@ -28,3 +28,8 @@ Requirements
 1. Run `pam-auth-update` and enable "PAM_Python Module with pam_crowd.py".  Save the config.
 1. Create a user in Crowd, and try logging in as them (should work as a native TTY login, or even ssh!)
 
+To Do...
+--------
+(1) Add unit tests.
+(2) Make this a pip module for simple installation.
+(3) Make the solution Redhat/CentOs friendly.
